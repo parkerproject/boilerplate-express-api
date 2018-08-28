@@ -3,7 +3,7 @@ info:
   version: 1.0.0
   title: instock-lemon
   description: Instock API
-basePath: /v1
+basePath: /api/v1
 tags:
   - name: Examples
     description: Simple example endpoints

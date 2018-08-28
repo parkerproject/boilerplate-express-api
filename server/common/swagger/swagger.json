@@ -1,0 +1,746 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "Instock API",
+    "version" : "1.0.0",
+    "title" : "Instock API",
+    "contact" : {
+      "email" : "Parker.Ituk@wgsn.com"
+    }
+  },
+  "basePath" : "/api/v1",
+  "tags" : [ {
+    "name" : "List",
+    "description" : "list"
+  }, {
+    "name" : "General"
+  } ,{
+    "name": "Specification"
+    }],
+  "schemes" : [ "http", "https" ],
+  "paths" : {
+    "/list/retailers" : {
+      "get" : {
+        "tags" : [ "List" ],
+        "summary" : "All Retailers",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "retailer_code",
+          "in" : "query",
+          "description" : "filter retailer by retailer code, ex. retailer_code=zara,macy",
+          "required" : false,
+          "type" : "string"
+        },{
+          "name" : "country_id",
+          "in" : "query",
+          "description" : "filter retailer by country id, ex. country_id=9",
+          "required" : false,
+          "type" : "string"
+          },{
+            "name" : "currency_id",
+            "in" : "query",
+            "description" : "filter retailer by currency id, ex. currency_id=5,9,7",
+            "required" : false,
+            "type" : "string"
+            }, {
+          "name" : "price_group_id",
+          "in" : "query",
+          "description" : "filter retailer by price group id, ex. price_group_id=1,2,3",
+          "required" : false,
+          "type" : "string"
+        },{
+          "name" : "retailer_type_id",
+          "in" : "query",
+          "description" : "filter retailer by retailer type id, ex. retailer_type_id=1,2,3",
+          "required" : false,
+          "type" : "string"
+          },{
+          "name" : "limit",
+          "in" : "query",
+          "description" : "number of retailers to retrieve, ex. limit=20",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "offset",
+          "in" : "query",
+          "description" : "use offset to paginate results, ex. offset=20",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "search results matching criteria",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Item"
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          }
+        }
+      }
+    },
+    "/products" : {
+      "get" : {
+        "tags" : [ "General" ],
+        "summary" : "All Products",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "brand",
+          "in" : "query",
+          "description" : "ex. brand=nike,mcqueen",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "category",
+          "in" : "query",
+          "description" : "ex. category=bag,shoes",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "retailer",
+          "in" : "query",
+          "description" : "ex. retailer=zara,zolanda",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "country",
+          "in" : "query",
+          "description" : "ex. country=us,uk",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "sub_category",
+          "in" : "query",
+          "description" : "ex. sub_category=shirt,dresses",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "division",
+          "in" : "query",
+          "description" : "ex. division=women",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "material",
+          "in" : "query",
+          "description" : "ex. material=other",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "min_price",
+          "in" : "query",
+          "description" : "ex. min_price=10",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "max_price",
+          "in" : "query",
+          "description" : "ex. max_price=60",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "original_price",
+          "in" : "query",
+          "description" : "ex. original_price=30",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "mark_up",
+          "in" : "query",
+          "description" : "ex. mark_up=0",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "mark_down",
+          "in" : "query",
+          "description" : "ex. mark_down=0",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "how many products to retrieve, ex. limit=20. maximum is 50",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "sort_by",
+          "in" : "query",
+          "description" : "sort results by, ex. sort_by=retailer",
+          "required" : false,
+          "type" : "string",
+          "enum" : [ "retailer", "brand", "country", "division", "material", "original_price", "min_price", "max_price" ]
+        }, {
+          "name" : "group_by",
+          "in" : "query",
+          "description" : "group results by, ex. group_by=category",
+          "required" : false,
+          "type" : "string",
+          "enum" : [ "retailer", "category", "brand", "colour" ]
+        }, {
+          "name" : "offset",
+          "in" : "query",
+          "description" : "use offset to paginate results, ex. offset=20",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "search results matching criteria",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Item"
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          }
+        }
+      }
+    },
+    "/products/{id}" : {
+      "get" : {
+        "tags" : [ "General" ],
+        "summary" : "get product by id",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of product to return",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "search results matching criteria",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Item"
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          }
+        }
+      }
+    },
+    "/categories" : {
+      "get" : {
+        "tags" : [ "General" ],
+        "summary" : "All Categories",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "filter",
+          "in" : "query",
+          "description" : "filter category, ex. filter=tops,bags",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "how many categories to retrieve, ex. limit=20",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "offset",
+          "in" : "query",
+          "description" : "use offset to paginate results, ex. offset=20",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "search results matching criteria",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Item"
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          }
+        }
+      }
+    },
+    "/categories/{id}" : {
+      "get" : {
+        "tags" : [ "General" ],
+        "summary" : "get category by id",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of category to return",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "search results matching criteria",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Item"
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          }
+        }
+      }
+    },
+    "/brands" : {
+      "get" : {
+        "tags" : [ "General" ],
+        "summary" : "All Brands",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "filter",
+          "in" : "query",
+          "description" : "filter brand, ex. filter=myer,colette",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "how many brands to retrieve, ex. limit=20",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "offset",
+          "in" : "query",
+          "description" : "use offset to paginate results, ex. offset=20",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "search results matching criteria",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Item"
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          }
+        }
+      }
+    },
+    "/brands/{id}" : {
+      "get" : {
+        "tags" : [ "General" ],
+        "summary" : "get brand by id",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of brand to return",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "search results matching criteria",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Item"
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          }
+        }
+      }
+    },
+    "/retailers" : {
+      "get" : {
+        "tags" : [ "General" ],
+        "summary" : "All Retailers",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "filter",
+          "in" : "query",
+          "description" : "filter retailer, ex. filter=zara,macy",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "how many retailers to retrieve, ex. limit=20",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "offset",
+          "in" : "query",
+          "description" : "use offset to paginate results, ex. offset=20",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "search results matching criteria",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Item"
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          }
+        }
+      }
+    },
+    "/retailer/{id}" : {
+      "get" : {
+        "tags" : [ "General" ],
+        "summary" : "get retailer by id",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of retailers to return",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "search results matching criteria",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Item"
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          }
+        }
+      }
+    },
+    "/colors" : {
+      "get" : {
+        "tags" : [ "General" ],
+        "summary" : "All Colours",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "filter",
+          "in" : "query",
+          "description" : "filter colours, ex. filter=black,red",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "how many colours to retrieve, ex. limit=20",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "offset",
+          "in" : "query",
+          "description" : "use offset to paginate results, ex. offset=20",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "search results matching criteria",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Item"
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          }
+        }
+      }
+    },
+    "/materials" : {
+      "get" : {
+        "tags" : [ "General" ],
+        "summary" : "All Materials",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "filter",
+          "in" : "query",
+          "description" : "filter material, ex. filter=floral,stripe",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "how many materials to retrieve, ex. limit=20",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "offset",
+          "in" : "query",
+          "description" : "use offset to paginate results, ex. offset=20",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "search results matching criteria",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Item"
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          }
+        }
+      }
+    },
+    "/spec" : {
+      "get" : {
+        "tags" : [ "Specification" ],
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "Return the API specification",
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "Item" : {
+      "type" : "object"
+    },
+    "Dashboard" : {
+      "type" : "object",
+      "properties" : {
+        "hash" : {
+          "type" : "string",
+          "example" : "a842c9503465497ea0"
+        },
+        "dashboard_type" : {
+          "type" : "string",
+          "example" : "product",
+          "description" : "type of dashboard",
+          "enum" : [ "overview", "product", "price", "color", "prints & graphics" ]
+        },
+        "params" : {
+          "$ref" : "#/definitions/Dashboard_params"
+        },
+        "filters" : {
+          "$ref" : "#/definitions/Dashboard_filters"
+        }
+      },
+      "example" : {
+        "dashboard_type" : "product",
+        "filters" : {
+          "end_date" : "end_date",
+          "retailers" : [ "retailers", "retailers" ],
+          "max_markdown_percent" : 5,
+          "dates" : "this_week",
+          "countries" : [ "countries", "countries" ],
+          "colors" : [ 9, 9 ],
+          "max_price" : 7,
+          "min_price" : 2,
+          "taxonomies" : [ "taxonomies", "taxonomies" ],
+          "materials" : [ 2, 2 ],
+          "min_markdown_percent" : 5,
+          "kpis" : [ "kpis", "kpis" ],
+          "prints_and_graphics" : [ 3, 3 ],
+          "start_date" : "start_date",
+          "price_comparison_currency" : "price_comparison_currency"
+        },
+        "params" : {
+          "retailers" : [ 1, 1 ],
+          "display_currency" : "USD",
+          "exclude_others" : [ "age_ranges", "age_ranges" ],
+          "view_by" : "brand",
+          "offset" : 6,
+          "limit" : 0,
+          "sorts" : {
+            "field" : [ "retailers", "retailers" ],
+            "order_by" : "order_by",
+            "direction" : "direction"
+          }
+        },
+        "hash" : "a842c9503465497ea0"
+      }
+    },
+    "Dashboard_params_sorts" : {
+      "properties" : {
+        "direction" : {
+          "type" : "string"
+        },
+        "field" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string",
+            "example" : "retailers"
+          }
+        },
+        "order_by" : {
+          "type" : "string"
+        }
+      },
+      "example" : {
+        "field" : [ "retailers", "retailers" ],
+        "order_by" : "order_by",
+        "direction" : "direction"
+      }
+    },
+    "Dashboard_params" : {
+      "properties" : {
+        "view_by" : {
+          "example" : "brand",
+          "description" : "view by"
+        },
+        "limit" : {
+          "type" : "integer"
+        },
+        "offset" : {
+          "type" : "integer"
+        },
+        "retailers" : {
+          "type" : "array",
+          "items" : {
+            "type" : "integer"
+          }
+        },
+        "display_currency" : {
+          "example" : "USD"
+        },
+        "exclude_others" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string",
+            "enum" : [ "age_ranges", "materials", "print_and_graphics", "colors", "brands" ]
+          }
+        },
+        "sorts" : {
+          "$ref" : "#/definitions/Dashboard_params_sorts"
+        }
+      },
+      "example" : {
+        "retailers" : [ 1, 1 ],
+        "display_currency" : "USD",
+        "exclude_others" : [ "age_ranges", "age_ranges" ],
+        "view_by" : "brand",
+        "offset" : 6,
+        "limit" : 0,
+        "sorts" : {
+          "field" : [ "retailers", "retailers" ],
+          "order_by" : "order_by",
+          "direction" : "direction"
+        }
+      }
+    },
+    "Dashboard_filters" : {
+      "properties" : {
+        "kpis" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "max_markdown_percent" : {
+          "type" : "integer"
+        },
+        "min_markdown_percent" : {
+          "type" : "integer"
+        },
+        "dates" : {
+          "example" : "this_week"
+        },
+        "start_date" : {
+          "type" : "string"
+        },
+        "end_date" : {
+          "type" : "string"
+        },
+        "countries" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "retailers" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "taxonomies" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "min_price" : {
+          "type" : "integer"
+        },
+        "max_price" : {
+          "type" : "integer"
+        },
+        "price_comparison_currency" : {
+          "type" : "string"
+        },
+        "colors" : {
+          "type" : "array",
+          "items" : {
+            "type" : "integer"
+          }
+        },
+        "prints_and_graphics" : {
+          "type" : "array",
+          "items" : {
+            "type" : "integer"
+          }
+        },
+        "materials" : {
+          "type" : "array",
+          "items" : {
+            "type" : "integer"
+          }
+        }
+      },
+      "example" : {
+        "end_date" : "end_date",
+        "retailers" : [ "retailers", "retailers" ],
+        "max_markdown_percent" : 5,
+        "dates" : "this_week",
+        "countries" : [ "countries", "countries" ],
+        "colors" : [ 9, 9 ],
+        "max_price" : 7,
+        "min_price" : 2,
+        "taxonomies" : [ "taxonomies", "taxonomies" ],
+        "materials" : [ 2, 2 ],
+        "min_markdown_percent" : 5,
+        "kpis" : [ "kpis", "kpis" ],
+        "prints_and_graphics" : [ 3, 3 ],
+        "start_date" : "start_date",
+        "price_comparison_currency" : "price_comparison_currency"
+      }
+    }
+  }
+}

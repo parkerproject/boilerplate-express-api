@@ -1,3 +1,5 @@
+import mysql from 'mysql';
+
 const config = {
   production: {
     host: '127.0.0.1',
@@ -21,6 +23,9 @@ const config = {
   },
 };
 
-exports.get = function get(env) {
-  return config[env] || config.development;
-};
+
+const connection = config[process.env.NODE_ENV] || config.development;
+
+const db = mysql.createConnection(connection);
+
+export default db;

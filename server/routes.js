@@ -1,5 +1,5 @@
-import examplesRouter from './api/examples/router';
+import retailerRouter from './api/retailer/RetailerRouter';
 
 export default function routes(app) {
-  app.use('/v1/examples', examplesRouter);
+  app.use('/api/v1/list/retailers', retailerRouter);
 }

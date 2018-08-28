@@ -7,8 +7,8 @@ module.exports = {
       new CopyWebpackPlugin(
         [
           {
-            from: 'server/common/swagger/Api.yaml',
-            to: 'server/common/swagger/Api.yaml',
+            from: 'server/common/swagger/swagger.json',
+            to: 'server/common/swagger/swagger.json',
           },
         ],
         options

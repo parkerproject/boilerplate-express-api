@@ -12,7 +12,8 @@ class ExamplesDatabase {
   }
 
   byId(id) {
-    return Promise.resolve(this._data[id]);
+    return Promise.resolve({ id });
+    // return Promise.resolve(this._data[id]);
   }
 
   insert(name) {

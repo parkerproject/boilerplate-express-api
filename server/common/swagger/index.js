@@ -2,7 +2,7 @@ import middleware from 'swagger-express-middleware';
 import * as path from 'path';
 
 export default function (app, routes) {
-  middleware(path.join(__dirname, 'Api.yaml'), app, (err, mw) => {
+  middleware(path.join(__dirname, 'swagger.json'), app, (err, mw) => {
     // Enable Express' case-sensitive and strict options
     // (so "/entities", "/Entities", and "/Entities/" are all different)
     app.enable('case sensitive routing');
@@ -10,7 +10,7 @@ export default function (app, routes) {
 
     app.use(mw.metadata());
     app.use(mw.files({
-      // Override the Express App's case-sensitive 
+      // Override the Express App's case-sensitive
       // and strict-routing settings for the Files middleware.
       caseSensitive: false,
       strict: false,
@@ -35,14 +35,13 @@ export default function (app, routes) {
     // These two middleware don't have any options (yet)
     app.use(
       mw.CORS(),
-      mw.validateRequest());
+      mw.validateRequest(),
+    );
 
     // Error handler to display the validation error as HTML
     app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars, no-shadow
       res.status(err.status || 500);
-      res.send(
-        `<h1>${err.status || 500} Error</h1>` +
-        `<pre>${err.message}</pre>`);
+      res.send(`<h1>${err.status || 500} Error</h1><pre>${err.message}</pre>`);
     });
 
     routes(app);

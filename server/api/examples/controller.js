@@ -7,6 +7,7 @@ export class Controller {
   }
 
   byId(req, res) {
+    console.log(1);
     ExamplesService
       .byId(req.params.id)
       .then(r => {

@@ -1,30 +1,24 @@
+import db from '../../config/database';
+
 class RetailerModel {
-  constructor() {
-    this._data = [];
-    this._counter = 0;
+  all(query, cb) {
+    const { code, limit = 15, offset = 0 } = query;
 
-    this.insert('example 0');
-    this.insert('example 1');
-  }
+    let sql = `SELECT * FROM retailers LIMIT ${limit} OFFSET ${offset}`;
 
-  all() {
-    return Promise.resolve(this._data);
+    if (code) {
+      const retailerCode = code ? code.split(',') : '';
+      sql = `SELECT * FROM retailers WHERE code ="${retailerCode}" LIMIT ${limit} OFFSET ${offset}`;
+    }
+
+    db.query(sql, (err, results) => {
+      if (err) throw err;
+      cb(results);
+    });
   }
 
   byId(id) {
-    return Promise.resolve(this._data[id]);
-  }
-
-  insert(name) {
-    const record = {
-      id: this._counter,
-      name,
-    };
-
-    this._counter += 1;
-    this._data.push(record);
-
-    return Promise.resolve(record);
+    return id;
   }
 }
 
