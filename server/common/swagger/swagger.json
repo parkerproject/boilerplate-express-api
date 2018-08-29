@@ -13,7 +13,7 @@
     "name" : "List",
     "description" : "list"
   }, {
-    "name" : "General"
+    "name" : "Comp Shopper"
   } ,{
     "name": "Specification"
     }],
@@ -85,7 +85,7 @@
     },
     "/products" : {
       "get" : {
-        "tags" : [ "General" ],
+        "tags" : [ "Comp Shopper" ],
         "summary" : "All Products",
         "produces" : [ "application/json" ],
         "parameters" : [ {
@@ -231,15 +231,15 @@
         }
       }
     },
-    "/categories" : {
+    "/list/categories" : {
       "get" : {
-        "tags" : [ "General" ],
+        "tags" : [ "List" ],
         "summary" : "All Categories",
         "produces" : [ "application/json" ],
         "parameters" : [ {
-          "name" : "filter",
+          "name" : "name",
           "in" : "query",
-          "description" : "filter category, ex. filter=tops,bags",
+          "description" : "category name, ex. name=watches,underwear",
           "required" : false,
           "type" : "string"
         }, {
@@ -271,16 +271,28 @@
         }
       }
     },
-    "/categories/{id}" : {
+    "/list/subcategories" : {
       "get" : {
-        "tags" : [ "General" ],
-        "summary" : "get category by id",
+        "tags" : [ "List" ],
+        "summary" : "All SubCategories",
         "produces" : [ "application/json" ],
         "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "description" : "ID of category to return",
-          "required" : true,
+          "name" : "name",
+          "in" : "query",
+          "description" : "subcategory name, ex. name=watches,underwear",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "how many subcategories to retrieve, ex. limit=20",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "offset",
+          "in" : "query",
+          "description" : "use offset to paginate results, ex. offset=20",
+          "required" : false,
           "type" : "string"
         } ],
         "responses" : {
@@ -299,15 +311,83 @@
         }
       }
     },
-    "/brands" : {
+    "/list/departments" : {
       "get" : {
-        "tags" : [ "General" ],
+        "tags" : [ "List" ],
+        "summary" : "All Departments",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "name",
+          "in" : "query",
+          "description" : "department name, ex. name=footwear,apparel",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "how many departments to retrieve, ex. limit=20",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "offset",
+          "in" : "query",
+          "description" : "use offset to paginate results, ex. offset=20",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "search results matching criteria",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Item"
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          }
+        }
+      }
+    },
+    "/list/markets" : {
+      "get" : {
+        "tags" : [ "List" ],
+        "summary" : "All Markets",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "name",
+          "in" : "query",
+          "description" : "market name, ex. name=footwear,apparel",
+          "required" : false,
+          "type" : "string"
+        }],
+        "responses" : {
+          "200" : {
+            "description" : "search results matching criteria",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Item"
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          }
+        }
+      }
+    },
+    "/list/brands" : {
+      "get" : {
+        "tags" : [ "List" ],
         "summary" : "All Brands",
         "produces" : [ "application/json" ],
         "parameters" : [ {
-          "name" : "filter",
+          "name" : "name",
           "in" : "query",
-          "description" : "filter brand, ex. filter=myer,colette",
+          "description" : "brand name, ex. name=Cufflinks",
           "required" : false,
           "type" : "string"
         }, {
@@ -339,50 +419,21 @@
         }
       }
     },
-    "/brands/{id}" : {
+    "/list/countries" : {
       "get" : {
-        "tags" : [ "General" ],
-        "summary" : "get brand by id",
+        "tags" : [ "List" ],
+        "summary" : "All Countries",
         "produces" : [ "application/json" ],
         "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "description" : "ID of brand to return",
-          "required" : true,
-          "type" : "integer",
-          "format" : "int64"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "search results matching criteria",
-            "schema" : {
-              "type" : "array",
-              "items" : {
-                "$ref" : "#/definitions/Item"
-              }
-            }
-          },
-          "400" : {
-            "description" : "bad input parameter"
-          }
-        }
-      }
-    },
-    "/retailers" : {
-      "get" : {
-        "tags" : [ "General" ],
-        "summary" : "All Retailers",
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "filter",
+          "name" : "country_code",
           "in" : "query",
-          "description" : "filter retailer, ex. filter=zara,macy",
+          "description" : "country code, ex. country_code=GBR,USA",
           "required" : false,
           "type" : "string"
         }, {
           "name" : "limit",
           "in" : "query",
-          "description" : "how many retailers to retrieve, ex. limit=20",
+          "description" : "how many countries to retrieve, ex. limit=20",
           "required" : false,
           "type" : "string"
         }, {
@@ -408,37 +459,9 @@
         }
       }
     },
-    "/retailer/{id}" : {
+    "/list/colors" : {
       "get" : {
-        "tags" : [ "General" ],
-        "summary" : "get retailer by id",
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "description" : "ID of retailers to return",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "search results matching criteria",
-            "schema" : {
-              "type" : "array",
-              "items" : {
-                "$ref" : "#/definitions/Item"
-              }
-            }
-          },
-          "400" : {
-            "description" : "bad input parameter"
-          }
-        }
-      }
-    },
-    "/colors" : {
-      "get" : {
-        "tags" : [ "General" ],
+        "tags" : [ "List" ],
         "summary" : "All Colours",
         "produces" : [ "application/json" ],
         "parameters" : [ {
@@ -476,21 +499,61 @@
         }
       }
     },
-    "/materials" : {
+    "/list/materials" : {
       "get" : {
-        "tags" : [ "General" ],
+        "tags" : [ "List" ],
         "summary" : "All Materials",
         "produces" : [ "application/json" ],
         "parameters" : [ {
-          "name" : "filter",
+          "name" : "name",
           "in" : "query",
-          "description" : "filter material, ex. filter=floral,stripe",
+          "description" : "material name, ex. name=cotton,leather",
           "required" : false,
           "type" : "string"
         }, {
           "name" : "limit",
           "in" : "query",
           "description" : "how many materials to retrieve, ex. limit=20",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "offset",
+          "in" : "query",
+          "description" : "use offset to paginate results, ex. offset=20",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "search results matching criteria",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Item"
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          }
+        }
+      }
+    },
+    "/list/prints" : {
+      "get" : {
+        "tags" : [ "List" ],
+        "summary" : "All Prints",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "name",
+          "in" : "query",
+          "description" : "print name, ex. name=floral,stripe",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "how many prints to retrieve, ex. limit=20",
           "required" : false,
           "type" : "string"
         }, {
