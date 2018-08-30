@@ -201,11 +201,18 @@
         }, {
           "name" : "sort_by",
           "in" : "query",
-          "description" : "sort results by,  sort_by=retailer_asc",
+          "description" : "sort results by,  sort_by=retailer",
           "required" : false,
           "type" : "string",
-          "enum" : [ "price_asc", "price_desc", "retailer_asc", "retailer_desc", "brand_asc", "brand_desc", "relevance" ]
-        }, {
+          "enum" : [ "price", "retailer", "brand", "relevance" ]
+        },{
+          "name" : "sort_direction",
+          "in" : "query",
+          "description" : "sort results by,  sort_direction=asc",
+          "required" : false,
+          "type" : "string",
+          "enum" : [ "asc", "desc" ]
+          }, {
           "name" : "group_by",
           "in" : "query",
           "description" : "group results by,  group_by=products",
@@ -263,7 +270,7 @@
         }
       }
     },
-    "/product/{product_id}/sku" : {
+    "/product/{product_id}/sku-history" : {
       "get" : {
         "tags" : [ "Product" ],
         "summary" : "get price history and stock status",
@@ -739,20 +746,27 @@
         }, {
           "name" : "sort_by",
           "in" : "query",
-          "description" : "sort results by,  sort_by=retailer_asc",
+          "description" : "sort results by,  sort_by=retailer_count",
           "required" : false,
           "type" : "string",
           "enum" : [
-            "retailer_count_asc",
-            "retailer_count_desc",
-            "retailer_name_asc",
-            "retailer_name_desc",
-            "category_count_asc",
-            "category_count_desc",
-            "category_name_asc",
-            "category_name_desc"
+            "retailer_count",
+            "retailer_count",
+            "retailer_name",
+            "retailer_name",
+            "category_count",
+            "category_count",
+            "category_name",
+            "category_name"
            ]
-        }, {
+        },{
+          "name" : "sort_direction",
+          "in" : "query",
+          "description" : "sort results by,  sort_by=asc",
+          "required" : false,
+          "type" : "string",
+          "enum" : [ "asc", "desc" ]
+          } ,{
           "name" : "count_by",
           "in" : "query",
           "description" : "count results by,  count_by=skus",
@@ -764,9 +778,9 @@
             "skus"
            ]
           },{
-          "name" : "view_by",
+          "name" : "group_by",
           "in" : "query",
-          "description" : "products at all {categories},  view_by=category",
+          "description" : "products at all {categories},  group_by=category",
           "required" : false,
           "type" : "string",
           "enum" : [ "retailer", "category", "brand" ]
@@ -890,20 +904,27 @@
         }, {
           "name" : "sort_by",
           "in" : "query",
-          "description" : "sort results by,  sort_by=retailer_asc",
+          "description" : "sort results by,  sort_by=retailer_count",
           "required" : false,
           "type" : "string",
           "enum" : [
-            "retailer_count_asc",
-            "retailer_count_desc",
-            "retailer_name_asc",
-            "retailer_name_desc",
-            "category_count_asc",
-            "category_count_desc",
-            "category_name_asc",
-            "category_name_desc"
+            "retailer_count",
+            "retailer_count",
+            "retailer_name",
+            "retailer_name",
+            "category_count",
+            "category_count",
+            "category_name",
+            "category_name"
            ]
-        }, {
+        },{
+          "name" : "sort_direction",
+          "in" : "query",
+          "description" : "sort results by,  sort_direction=asc",
+          "required" : false,
+          "type" : "string",
+          "enum" : [ "asc", "desc" ]
+          }, {
           "name" : "count_by",
           "in" : "query",
           "description" : "count results by,  count_by=skus",
@@ -915,9 +936,9 @@
             "skus"
            ]
           },{
-          "name" : "view_by",
+          "name" : "group_by",
           "in" : "query",
-          "description" : "products at all {categories},  view_by=category",
+          "description" : "products at all {categories},  group_by=category",
           "required" : false,
           "type" : "string",
           "enum" : [ "retailer", "category", "brand" ]
@@ -1029,20 +1050,23 @@
         }, {
           "name" : "sort_by",
           "in" : "query",
-          "description" : "sort results by,  sort_by=retailer_asc",
+          "description" : "sort results by,  sort_by=retailer_name",
           "required" : false,
           "type" : "string",
           "enum" : [
-            "colours_count_asc",
-            "colours_count_desc",
-            "colours_name_asc",
-            "colours_name_desc",
-            "retailer_count_asc",
-            "retailer_count_desc",
-            "retailer_name_asc",
-            "retailer_name_desc"
+            "colours_count",
+            "colours_name",
+            "retailer_count",
+            "retailer_name",
            ]
-        }, {
+        },{
+          "name" : "sort_direction",
+          "in" : "query",
+          "description" : "sort results by,  sort_direction=asc",
+          "required" : false,
+          "type" : "string",
+          "enum" : [ "asc", "desc" ]
+          }, {
           "name" : "count_by",
           "in" : "query",
           "description" : "count results by,  count_by=skus",
@@ -1054,9 +1078,9 @@
             "skus"
            ]
           },{
-          "name" : "view_by",
+          "name" : "group_by",
           "in" : "query",
-          "description" : "products at all {colours},  view_by=colour",
+          "description" : "products at all {colours},  group_by=colour",
           "required" : false,
           "type" : "string",
           "enum" : [ "retailer", "category", "brand", "colour" ]
@@ -1168,23 +1192,26 @@
         }, {
           "name" : "sort_by",
           "in" : "query",
-          "description" : "sort results by,  sort_by=retailer_asc",
+          "description" : "sort results by,  sort_by=retailer_count",
           "required" : false,
           "type" : "string",
           "enum" : [
-            "prints_graphics_count_asc",
-            "prints_graphics_count_desc",
-            "prints_graphics_name_asc",
-            "prints_graphics_name_desc",
-            "retailer_count_asc",
-            "retailer_count_desc",
-            "retailer_name_asc",
-            "retailer_name_desc"
+            "prints_graphics_count",
+            "prints_graphics_name",
+            "retailer_count",
+            "retailer_name",
            ]
-        }, {
-          "name" : "count_by",
+        },{
+          "name" : "sort_direction",
           "in" : "query",
-          "description" : "count results by,  count_by=skus",
+          "description" : "sort results by,  sort_direction=asc",
+          "required" : false,
+          "type" : "string",
+          "enum" : [ "asc", "desc" ]
+          }, {
+          "name" : "group_by_total",
+          "in" : "query",
+          "description" : "count results by,  group_by_total=skus",
           "required" : false,
           "type" : "string",
           "enum" : [
@@ -1193,9 +1220,9 @@
             "skus"
            ]
           },{
-          "name" : "view_by",
+          "name" : "group_by",
           "in" : "query",
-          "description" : "products at all {colours},  view_by=colour",
+          "description" : "products at all {colours},  group_by=colour",
           "required" : false,
           "type" : "string",
           "enum" : [ "retailer", "category", "brand", "colour", "prints_graphics" ]
