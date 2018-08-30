@@ -9,14 +9,17 @@
     }
   },
   "basePath" : "/api/v1",
+  "x-explorer-enabled": false,
   "tags" : [ {
     "name" : "List",
     "description" : "list"
   }, {
-    "name" : "Comp Shopper"
+    "name" : "Product"
   } ,{
-    "name": "Specification"
-    }],
+    "name": "Dashboard"
+    },{
+      "name": "User"
+      }],
   "schemes" : [ "http", "https" ],
   "paths" : {
     "/list/retailers" : {
@@ -27,43 +30,51 @@
         "parameters" : [ {
           "name" : "retailer_code",
           "in" : "query",
-          "description" : "filter retailer by retailer code, ex. retailer_code=zara,macy",
+          "description" : "filter retailer by retailer code,  retailer_code=zara,macy",
           "required" : false,
           "type" : "string"
         },{
           "name" : "country_id",
           "in" : "query",
-          "description" : "filter retailer by country id, ex. country_id=9",
+          "description" : "filter retailer by country id,  country_id=9",
           "required" : false,
           "type" : "string"
           },{
             "name" : "currency_id",
             "in" : "query",
-            "description" : "filter retailer by currency id, ex. currency_id=5,9,7",
+            "description" : "filter retailer by currency id,  currency_id=5,9,7",
             "required" : false,
             "type" : "string"
             }, {
           "name" : "price_group_id",
           "in" : "query",
-          "description" : "filter retailer by price group id, ex. price_group_id=1,2,3",
+          "description" : "filter retailer by price group id,  price_group_id=1,2,3",
           "required" : false,
           "type" : "string"
         },{
           "name" : "retailer_type_id",
           "in" : "query",
-          "description" : "filter retailer by retailer type id, ex. retailer_type_id=1,2,3",
+          "description" : "filter retailer by retailer type id,  retailer_type_id=1,2,3",
           "required" : false,
           "type" : "string"
-          },{
+          },
+          {
+            "name" : "group",
+            "in" : "query",
+            "description" : "filter retailer group,  group=luxury",
+            "required" : false,
+            "type" : "string",
+            "enum": ["retailers_follow", "all_prices_tiers", "luxury", "premium", "mid_mass", "value"]
+            },{
           "name" : "limit",
           "in" : "query",
-          "description" : "number of retailers to retrieve, ex. limit=20",
+          "description" : "number of retailers to retrieve,  limit=20",
           "required" : false,
           "type" : "string"
         }, {
           "name" : "offset",
           "in" : "query",
-          "description" : "use offset to paginate results, ex. offset=20",
+          "description" : "use offset to paginate results,  offset=20",
           "required" : false,
           "type" : "string"
         } ],
@@ -85,105 +96,126 @@
     },
     "/products" : {
       "get" : {
-        "tags" : [ "Comp Shopper" ],
+        "tags" : [ "Product" ],
         "summary" : "All Products",
         "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "brand",
           "in" : "query",
-          "description" : "ex. brand=nike,mcqueen",
+          "description" : " brand=nike,mcqueen",
           "required" : false,
           "type" : "string"
         }, {
           "name" : "category",
           "in" : "query",
-          "description" : "ex. category=bag,shoes",
+          "description" : " category=bag,shoes",
           "required" : false,
           "type" : "string"
-        }, {
+        },  {
+          "name" : "sub_category",
+          "in" : "query",
+          "description" : " sub_category=shirt,dresses",
+          "required" : false,
+          "type" : "string"
+        },{
+          "name" : "department",
+          "in" : "query",
+          "description" : " department=footwear,apparel",
+          "required" : false,
+          "type" : "string"
+          }, {
+            "name" : "market",
+            "in" : "query",
+            "description" : " market=womens",
+            "required" : false,
+            "type" : "string"
+          },{
           "name" : "retailer",
           "in" : "query",
-          "description" : "ex. retailer=zara,zolanda",
+          "description" : " retailer=zara,zolanda",
           "required" : false,
           "type" : "string"
         }, {
           "name" : "country",
           "in" : "query",
-          "description" : "ex. country=us,uk",
-          "required" : false,
-          "type" : "string"
-        }, {
-          "name" : "sub_category",
-          "in" : "query",
-          "description" : "ex. sub_category=shirt,dresses",
-          "required" : false,
-          "type" : "string"
-        }, {
-          "name" : "division",
-          "in" : "query",
-          "description" : "ex. division=women",
+          "description" : " country=us,uk",
           "required" : false,
           "type" : "string"
         }, {
           "name" : "material",
           "in" : "query",
-          "description" : "ex. material=other",
+          "description" : " material=other",
           "required" : false,
           "type" : "string"
-        }, {
+        },{
+          "name" : "print",
+          "in" : "query",
+          "description" : " print=floral,stripe",
+          "required" : false,
+          "type" : "string"
+          }, {
+            "name" : "color",
+            "in" : "query",
+            "description" : " color=red,black",
+            "required" : false,
+            "type" : "string"
+            },{
           "name" : "min_price",
           "in" : "query",
-          "description" : "ex. min_price=10",
+          "description" : " min_price=10",
           "required" : false,
           "type" : "string"
         }, {
           "name" : "max_price",
           "in" : "query",
-          "description" : "ex. max_price=60",
+          "description" : " max_price=60",
           "required" : false,
           "type" : "string"
         }, {
-          "name" : "original_price",
+          "name" : "kpi_product",
           "in" : "query",
-          "description" : "ex. original_price=30",
+          "description" : " kpi_product=new_in",
           "required" : false,
-          "type" : "string"
+          "type" : "string",
+          "enum": ["all", "new_in"]
         }, {
-          "name" : "mark_up",
+          "name" : "kpi_stock_status",
           "in" : "query",
-          "description" : "ex. mark_up=0",
+          "description" : " kpi_stock_status=out_of_stock",
           "required" : false,
-          "type" : "string"
-        }, {
-          "name" : "mark_down",
-          "in" : "query",
-          "description" : "ex. mark_down=0",
-          "required" : false,
-          "type" : "string"
+          "type" : "string",
+          "enum": ["all", "in_stock", "out_of_stock", "restocked"]
+          },{
+            "name" : "kpi_price",
+            "in" : "query",
+            "description" : " kpi_price=markdown",
+            "required" : false,
+            "type" : "string",
+            "enum": ["all", "original_price", "markdown", "markup"]
         }, {
           "name" : "limit",
           "in" : "query",
-          "description" : "how many products to retrieve, ex. limit=20. maximum is 50",
+          "description" : "how many products to retrieve,  limit=20. maximum is 50",
           "required" : false,
           "type" : "string"
         }, {
           "name" : "sort_by",
           "in" : "query",
-          "description" : "sort results by, ex. sort_by=retailer",
+          "description" : "sort results by,  sort_by=retailer_asc",
           "required" : false,
           "type" : "string",
-          "enum" : [ "retailer", "brand", "country", "division", "material", "original_price", "min_price", "max_price" ]
+          "enum" : [ "price_asc", "price_desc", "retailer_asc", "retailer_desc", "brand_asc", "brand_desc", "relevance" ]
         }, {
           "name" : "group_by",
           "in" : "query",
-          "description" : "group results by, ex. group_by=category",
+          "description" : "group results by,  group_by=products",
           "required" : false,
           "type" : "string",
-          "enum" : [ "retailer", "category", "brand", "colour" ]
+          "enum" : [ "colourways", "products" ]
         }, {
           "name" : "offset",
           "in" : "query",
-          "description" : "use offset to paginate results, ex. offset=20",
+          "description" : "use offset to paginate results,  offset=20",
           "required" : false,
           "type" : "string"
         } ],
@@ -193,7 +225,7 @@
             "schema" : {
               "type" : "array",
               "items" : {
-                "$ref" : "#/definitions/Item"
+                "$ref" : "#/definitions/Product"
               }
             }
           },
@@ -203,13 +235,13 @@
         }
       }
     },
-    "/products/{id}" : {
+    "/product/{product_id}" : {
       "get" : {
-        "tags" : [ "General" ],
+        "tags" : [ "Product" ],
         "summary" : "get product by id",
         "produces" : [ "application/json" ],
         "parameters" : [ {
-          "name" : "id",
+          "name" : "product_id",
           "in" : "path",
           "description" : "ID of product to return",
           "required" : true,
@@ -221,7 +253,35 @@
             "schema" : {
               "type" : "array",
               "items" : {
-                "$ref" : "#/definitions/Item"
+                "$ref" : "#/definitions/Product_detail"
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          }
+        }
+      }
+    },
+    "/product/{product_id}/sku" : {
+      "get" : {
+        "tags" : [ "Product" ],
+        "summary" : "get price history and stock status",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "product_id",
+          "in" : "path",
+          "description" : "ID of product to return",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "search results matching criteria",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Skus"
               }
             }
           },
@@ -239,19 +299,19 @@
         "parameters" : [ {
           "name" : "name",
           "in" : "query",
-          "description" : "category name, ex. name=watches,underwear",
+          "description" : "category name,  name=watches,underwear",
           "required" : false,
           "type" : "string"
         }, {
           "name" : "limit",
           "in" : "query",
-          "description" : "how many categories to retrieve, ex. limit=20",
+          "description" : "how many categories to retrieve,  limit=20",
           "required" : false,
           "type" : "string"
         }, {
           "name" : "offset",
           "in" : "query",
-          "description" : "use offset to paginate results, ex. offset=20",
+          "description" : "use offset to paginate results,  offset=20",
           "required" : false,
           "type" : "string"
         } ],
@@ -261,7 +321,7 @@
             "schema" : {
               "type" : "array",
               "items" : {
-                "$ref" : "#/definitions/Item"
+                "$ref" : "#/definitions/Categories"
               }
             }
           },
@@ -279,19 +339,19 @@
         "parameters" : [ {
           "name" : "name",
           "in" : "query",
-          "description" : "subcategory name, ex. name=watches,underwear",
+          "description" : "subcategory name,  name=watches,underwear",
           "required" : false,
           "type" : "string"
         }, {
           "name" : "limit",
           "in" : "query",
-          "description" : "how many subcategories to retrieve, ex. limit=20",
+          "description" : "how many subcategories to retrieve,  limit=20",
           "required" : false,
           "type" : "string"
         }, {
           "name" : "offset",
           "in" : "query",
-          "description" : "use offset to paginate results, ex. offset=20",
+          "description" : "use offset to paginate results,  offset=20",
           "required" : false,
           "type" : "string"
         } ],
@@ -319,19 +379,19 @@
         "parameters" : [ {
           "name" : "name",
           "in" : "query",
-          "description" : "department name, ex. name=footwear,apparel",
+          "description" : "department name,  name=footwear,apparel",
           "required" : false,
           "type" : "string"
         }, {
           "name" : "limit",
           "in" : "query",
-          "description" : "how many departments to retrieve, ex. limit=20",
+          "description" : "how many departments to retrieve,  limit=20",
           "required" : false,
           "type" : "string"
         }, {
           "name" : "offset",
           "in" : "query",
-          "description" : "use offset to paginate results, ex. offset=20",
+          "description" : "use offset to paginate results,  offset=20",
           "required" : false,
           "type" : "string"
         } ],
@@ -359,7 +419,7 @@
         "parameters" : [ {
           "name" : "name",
           "in" : "query",
-          "description" : "market name, ex. name=footwear,apparel",
+          "description" : "market name,  name=footwear,apparel",
           "required" : false,
           "type" : "string"
         }],
@@ -387,19 +447,19 @@
         "parameters" : [ {
           "name" : "name",
           "in" : "query",
-          "description" : "brand name, ex. name=Cufflinks",
+          "description" : "brand name,  name=Cufflinks",
           "required" : false,
           "type" : "string"
         }, {
           "name" : "limit",
           "in" : "query",
-          "description" : "how many brands to retrieve, ex. limit=20",
+          "description" : "how many brands to retrieve,  limit=20",
           "required" : false,
           "type" : "string"
         }, {
           "name" : "offset",
           "in" : "query",
-          "description" : "use offset to paginate results, ex. offset=20",
+          "description" : "use offset to paginate results,  offset=20",
           "required" : false,
           "type" : "string"
         } ],
@@ -427,19 +487,19 @@
         "parameters" : [ {
           "name" : "country_code",
           "in" : "query",
-          "description" : "country code, ex. country_code=GBR,USA",
+          "description" : "country code,  country_code=GBR,USA",
           "required" : false,
           "type" : "string"
         }, {
           "name" : "limit",
           "in" : "query",
-          "description" : "how many countries to retrieve, ex. limit=20",
+          "description" : "how many countries to retrieve,  limit=20",
           "required" : false,
           "type" : "string"
         }, {
           "name" : "offset",
           "in" : "query",
-          "description" : "use offset to paginate results, ex. offset=20",
+          "description" : "use offset to paginate results,  offset=20",
           "required" : false,
           "type" : "string"
         } ],
@@ -467,19 +527,19 @@
         "parameters" : [ {
           "name" : "filter",
           "in" : "query",
-          "description" : "filter colours, ex. filter=black,red",
+          "description" : "filter colours,  filter=black,red",
           "required" : false,
           "type" : "string"
         }, {
           "name" : "limit",
           "in" : "query",
-          "description" : "how many colours to retrieve, ex. limit=20",
+          "description" : "how many colours to retrieve,  limit=20",
           "required" : false,
           "type" : "string"
         }, {
           "name" : "offset",
           "in" : "query",
-          "description" : "use offset to paginate results, ex. offset=20",
+          "description" : "use offset to paginate results,  offset=20",
           "required" : false,
           "type" : "string"
         } ],
@@ -507,19 +567,19 @@
         "parameters" : [ {
           "name" : "name",
           "in" : "query",
-          "description" : "material name, ex. name=cotton,leather",
+          "description" : "material name,  name=cotton,leather",
           "required" : false,
           "type" : "string"
         }, {
           "name" : "limit",
           "in" : "query",
-          "description" : "how many materials to retrieve, ex. limit=20",
+          "description" : "how many materials to retrieve,  limit=20",
           "required" : false,
           "type" : "string"
         }, {
           "name" : "offset",
           "in" : "query",
-          "description" : "use offset to paginate results, ex. offset=20",
+          "description" : "use offset to paginate results,  offset=20",
           "required" : false,
           "type" : "string"
         } ],
@@ -547,19 +607,19 @@
         "parameters" : [ {
           "name" : "name",
           "in" : "query",
-          "description" : "print name, ex. name=floral,stripe",
+          "description" : "print name,  name=floral,stripe",
           "required" : false,
           "type" : "string"
         }, {
           "name" : "limit",
           "in" : "query",
-          "description" : "how many prints to retrieve, ex. limit=20",
+          "description" : "how many prints to retrieve,  limit=20",
           "required" : false,
           "type" : "string"
         }, {
           "name" : "offset",
           "in" : "query",
-          "description" : "use offset to paginate results, ex. offset=20",
+          "description" : "use offset to paginate results,  offset=20",
           "required" : false,
           "type" : "string"
         } ],
@@ -579,231 +639,1592 @@
         }
       }
     },
-    "/spec" : {
+    "/v1/dashboard/product" : {
       "get" : {
-        "tags" : [ "Specification" ],
+        "tags" : [ "Dashboard" ],
         "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "brand",
+          "in" : "query",
+          "description" : " brand=nike,mcqueen",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "category",
+          "in" : "query",
+          "description" : " category=bag,shoes",
+          "required" : false,
+          "type" : "string"
+        },  {
+          "name" : "sub_category",
+          "in" : "query",
+          "description" : " sub_category=shirt,dresses",
+          "required" : false,
+          "type" : "string"
+        },{
+          "name" : "department",
+          "in" : "query",
+          "description" : " department=footwear,apparel",
+          "required" : false,
+          "type" : "string"
+          }, {
+            "name" : "market",
+            "in" : "query",
+            "description" : " market=womens",
+            "required" : false,
+            "type" : "string"
+          },{
+          "name" : "retailer",
+          "in" : "query",
+          "description" : " retailer=zara,zolanda",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "country",
+          "in" : "query",
+          "description" : " country=us,uk",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "material",
+          "in" : "query",
+          "description" : " material=other",
+          "required" : false,
+          "type" : "string"
+        },{
+          "name" : "print",
+          "in" : "query",
+          "description" : " print=floral,stripe",
+          "required" : false,
+          "type" : "string"
+          }, {
+            "name" : "color",
+            "in" : "query",
+            "description" : " color=red,black",
+            "required" : false,
+            "type" : "string"
+            },{
+          "name" : "min_price",
+          "in" : "query",
+          "description" : " min_price=10",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "max_price",
+          "in" : "query",
+          "description" : " max_price=60",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "kpi_product",
+          "in" : "query",
+          "description" : " kpi_product=new_in",
+          "required" : false,
+          "type" : "string",
+          "enum": ["all", "new_in"]
+        }, {
+          "name" : "kpi_stock_status",
+          "in" : "query",
+          "description" : " kpi_stock_status=out_of_stock",
+          "required" : false,
+          "type" : "string",
+          "enum": ["all", "in_stock", "out_of_stock", "restocked"]
+          },{
+            "name" : "kpi_price",
+            "in" : "query",
+            "description" : " kpi_price=markdown",
+            "required" : false,
+            "type" : "string",
+            "enum": ["all", "original_price", "markdown", "markup"]
+        }, {
+          "name" : "sort_by",
+          "in" : "query",
+          "description" : "sort results by,  sort_by=retailer_asc",
+          "required" : false,
+          "type" : "string",
+          "enum" : [
+            "retailer_count_asc",
+            "retailer_count_desc",
+            "retailer_name_asc",
+            "retailer_name_desc",
+            "category_count_asc",
+            "category_count_desc",
+            "category_name_asc",
+            "category_name_desc"
+           ]
+        }, {
+          "name" : "count_by",
+          "in" : "query",
+          "description" : "count results by,  count_by=skus",
+          "required" : false,
+          "type" : "string",
+          "enum" : [
+            "colourways",
+            "products",
+            "skus"
+           ]
+          },{
+          "name" : "view_by",
+          "in" : "query",
+          "description" : "products at all {categories},  view_by=category",
+          "required" : false,
+          "type" : "string",
+          "enum" : [ "retailer", "category", "brand" ]
+        } ],
         "responses" : {
           "200" : {
             "description" : "Return the API specification",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Dashboard"
+              }
+            }
           }
         }
       }
-    }
+    },
+    "/v1/dashboard/price" : {
+      "get" : {
+        "tags" : [ "Dashboard" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "brand",
+          "in" : "query",
+          "description" : " brand=nike,mcqueen",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "category",
+          "in" : "query",
+          "description" : " category=bag,shoes",
+          "required" : false,
+          "type" : "string"
+        },  {
+          "name" : "sub_category",
+          "in" : "query",
+          "description" : " sub_category=shirt,dresses",
+          "required" : false,
+          "type" : "string"
+        },{
+          "name" : "department",
+          "in" : "query",
+          "description" : " department=footwear,apparel",
+          "required" : false,
+          "type" : "string"
+          }, {
+            "name" : "market",
+            "in" : "query",
+            "description" : " market=womens",
+            "required" : false,
+            "type" : "string"
+          },{
+          "name" : "retailer",
+          "in" : "query",
+          "description" : " retailer=zara,zolanda",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "country",
+          "in" : "query",
+          "description" : " country=us,uk",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "material",
+          "in" : "query",
+          "description" : " material=other",
+          "required" : false,
+          "type" : "string"
+        },{
+          "name" : "print",
+          "in" : "query",
+          "description" : " print=floral,stripe",
+          "required" : false,
+          "type" : "string"
+          }, {
+            "name" : "color",
+            "in" : "query",
+            "description" : " color=red,black",
+            "required" : false,
+            "type" : "string"
+            },{
+          "name" : "min_price",
+          "in" : "query",
+          "description" : " min_price=10",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "max_price",
+          "in" : "query",
+          "description" : " max_price=60",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "price_increments",
+          "in" : "query",
+          "description" : " price_increments=5",
+          "required" : false,
+          "type" : "string"
+          },{
+          "name" : "kpi_product",
+          "in" : "query",
+          "description" : " kpi_product=new_in",
+          "required" : false,
+          "type" : "string",
+          "enum": ["all", "new_in"]
+        }, {
+          "name" : "kpi_stock_status",
+          "in" : "query",
+          "description" : " kpi_stock_status=out_of_stock",
+          "required" : false,
+          "type" : "string",
+          "enum": ["all", "in_stock", "out_of_stock", "restocked"]
+          },{
+            "name" : "kpi_price",
+            "in" : "query",
+            "description" : " kpi_price=markdown",
+            "required" : false,
+            "type" : "string",
+            "enum": ["all", "original_price", "markdown", "markup"]
+        }, {
+          "name" : "sort_by",
+          "in" : "query",
+          "description" : "sort results by,  sort_by=retailer_asc",
+          "required" : false,
+          "type" : "string",
+          "enum" : [
+            "retailer_count_asc",
+            "retailer_count_desc",
+            "retailer_name_asc",
+            "retailer_name_desc",
+            "category_count_asc",
+            "category_count_desc",
+            "category_name_asc",
+            "category_name_desc"
+           ]
+        }, {
+          "name" : "count_by",
+          "in" : "query",
+          "description" : "count results by,  count_by=skus",
+          "required" : false,
+          "type" : "string",
+          "enum" : [
+            "colourways",
+            "products",
+            "skus"
+           ]
+          },{
+          "name" : "view_by",
+          "in" : "query",
+          "description" : "products at all {categories},  view_by=category",
+          "required" : false,
+          "type" : "string",
+          "enum" : [ "retailer", "category", "brand" ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Return the API specification",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Dashboard"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/dashboard/colour" : {
+      "get" : {
+        "tags" : [ "Dashboard" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "brand",
+          "in" : "query",
+          "description" : " brand=nike,mcqueen",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "category",
+          "in" : "query",
+          "description" : " category=bag,shoes",
+          "required" : false,
+          "type" : "string"
+        },  {
+          "name" : "sub_category",
+          "in" : "query",
+          "description" : " sub_category=shirt,dresses",
+          "required" : false,
+          "type" : "string"
+        },{
+          "name" : "department",
+          "in" : "query",
+          "description" : " department=footwear,apparel",
+          "required" : false,
+          "type" : "string"
+          }, {
+            "name" : "market",
+            "in" : "query",
+            "description" : " market=womens",
+            "required" : false,
+            "type" : "string"
+          },{
+          "name" : "retailer",
+          "in" : "query",
+          "description" : " retailer=zara,zolanda",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "country",
+          "in" : "query",
+          "description" : " country=us,uk",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "material",
+          "in" : "query",
+          "description" : " material=other",
+          "required" : false,
+          "type" : "string"
+        },{
+          "name" : "print",
+          "in" : "query",
+          "description" : " print=floral,stripe",
+          "required" : false,
+          "type" : "string"
+          },{
+          "name" : "min_price",
+          "in" : "query",
+          "description" : " min_price=10",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "max_price",
+          "in" : "query",
+          "description" : " max_price=60",
+          "required" : false,
+          "type" : "string"
+        },{
+          "name" : "kpi_product",
+          "in" : "query",
+          "description" : " kpi_product=new_in",
+          "required" : false,
+          "type" : "string",
+          "enum": ["all", "new_in"]
+        }, {
+          "name" : "kpi_stock_status",
+          "in" : "query",
+          "description" : " kpi_stock_status=out_of_stock",
+          "required" : false,
+          "type" : "string",
+          "enum": ["all", "in_stock", "out_of_stock", "restocked"]
+          },{
+            "name" : "kpi_price",
+            "in" : "query",
+            "description" : " kpi_price=markdown",
+            "required" : false,
+            "type" : "string",
+            "enum": ["all", "original_price", "markdown", "markup"]
+        }, {
+          "name" : "sort_by",
+          "in" : "query",
+          "description" : "sort results by,  sort_by=retailer_asc",
+          "required" : false,
+          "type" : "string",
+          "enum" : [
+            "colours_count_asc",
+            "colours_count_desc",
+            "colours_name_asc",
+            "colours_name_desc",
+            "retailer_count_asc",
+            "retailer_count_desc",
+            "retailer_name_asc",
+            "retailer_name_desc"
+           ]
+        }, {
+          "name" : "count_by",
+          "in" : "query",
+          "description" : "count results by,  count_by=skus",
+          "required" : false,
+          "type" : "string",
+          "enum" : [
+            "colourways",
+            "products",
+            "skus"
+           ]
+          },{
+          "name" : "view_by",
+          "in" : "query",
+          "description" : "products at all {colours},  view_by=colour",
+          "required" : false,
+          "type" : "string",
+          "enum" : [ "retailer", "category", "brand", "colour" ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Return the API specification",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Dashboard"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/dashboard/prints_graphics" : {
+      "get" : {
+        "tags" : [ "Dashboard" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "brand",
+          "in" : "query",
+          "description" : " brand=nike,mcqueen",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "category",
+          "in" : "query",
+          "description" : " category=bag,shoes",
+          "required" : false,
+          "type" : "string"
+        },  {
+          "name" : "sub_category",
+          "in" : "query",
+          "description" : " sub_category=shirt,dresses",
+          "required" : false,
+          "type" : "string"
+        },{
+          "name" : "department",
+          "in" : "query",
+          "description" : " department=footwear,apparel",
+          "required" : false,
+          "type" : "string"
+          }, {
+            "name" : "market",
+            "in" : "query",
+            "description" : " market=womens",
+            "required" : false,
+            "type" : "string"
+          },{
+          "name" : "retailer",
+          "in" : "query",
+          "description" : " retailer=zara,zolanda",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "country",
+          "in" : "query",
+          "description" : " country=us,uk",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "material",
+          "in" : "query",
+          "description" : " material=other",
+          "required" : false,
+          "type" : "string"
+        },{
+          "name" : "print",
+          "in" : "query",
+          "description" : " print=floral,stripe",
+          "required" : false,
+          "type" : "string"
+          },{
+          "name" : "min_price",
+          "in" : "query",
+          "description" : " min_price=10",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "max_price",
+          "in" : "query",
+          "description" : " max_price=60",
+          "required" : false,
+          "type" : "string"
+        },{
+          "name" : "kpi_product",
+          "in" : "query",
+          "description" : " kpi_product=new_in",
+          "required" : false,
+          "type" : "string",
+          "enum": ["all", "new_in"]
+        }, {
+          "name" : "kpi_stock_status",
+          "in" : "query",
+          "description" : " kpi_stock_status=out_of_stock",
+          "required" : false,
+          "type" : "string",
+          "enum": ["all", "in_stock", "out_of_stock", "restocked"]
+          },{
+            "name" : "kpi_price",
+            "in" : "query",
+            "description" : " kpi_price=markdown",
+            "required" : false,
+            "type" : "string",
+            "enum": ["all", "original_price", "markdown", "markup"]
+        }, {
+          "name" : "sort_by",
+          "in" : "query",
+          "description" : "sort results by,  sort_by=retailer_asc",
+          "required" : false,
+          "type" : "string",
+          "enum" : [
+            "prints_graphics_count_asc",
+            "prints_graphics_count_desc",
+            "prints_graphics_name_asc",
+            "prints_graphics_name_desc",
+            "retailer_count_asc",
+            "retailer_count_desc",
+            "retailer_name_asc",
+            "retailer_name_desc"
+           ]
+        }, {
+          "name" : "count_by",
+          "in" : "query",
+          "description" : "count results by,  count_by=skus",
+          "required" : false,
+          "type" : "string",
+          "enum" : [
+            "colourways",
+            "products",
+            "skus"
+           ]
+          },{
+          "name" : "view_by",
+          "in" : "query",
+          "description" : "products at all {colours},  view_by=colour",
+          "required" : false,
+          "type" : "string",
+          "enum" : [ "retailer", "category", "brand", "colour", "prints_graphics" ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Return the API specification",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Dashboard"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/{user_id}/settings" : {
+      "get" : {
+        "tags" : [ "User" ],
+        "summary" : "get user settings",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "user_id",
+          "in" : "path",
+          "description" : "ID of user to return",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "search results matching criteria",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/User"
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          }
+        }
+      }
+    },
+    "/user/{user_id}/saved_reports" : {
+      "get" : {
+        "tags" : [ "User" ],
+        "summary" : "get user saved reports",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "user_id",
+          "in" : "path",
+          "description" : "ID of user to return",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "search results matching criteria",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/UserReports"
+              }
+            }
+          },
+          "400" : {
+            "description" : "wrong user_id"
+          }
+        }
+      }
+    },
   },
   "definitions" : {
     "Item" : {
       "type" : "object"
     },
-    "Dashboard" : {
+    "User" : {
       "type" : "object",
-      "properties" : {
-        "hash" : {
-          "type" : "string",
-          "example" : "a842c9503465497ea0"
-        },
-        "dashboard_type" : {
-          "type" : "string",
-          "example" : "product",
-          "description" : "type of dashboard",
-          "enum" : [ "overview", "product", "price", "color", "prints & graphics" ]
-        },
-        "params" : {
-          "$ref" : "#/definitions/Dashboard_params"
-        },
-        "filters" : {
-          "$ref" : "#/definitions/Dashboard_filters"
-        }
-      },
-      "example" : {
-        "dashboard_type" : "product",
-        "filters" : {
-          "end_date" : "end_date",
-          "retailers" : [ "retailers", "retailers" ],
-          "max_markdown_percent" : 5,
-          "dates" : "this_week",
-          "countries" : [ "countries", "countries" ],
-          "colors" : [ 9, 9 ],
-          "max_price" : 7,
-          "min_price" : 2,
-          "taxonomies" : [ "taxonomies", "taxonomies" ],
-          "materials" : [ 2, 2 ],
-          "min_markdown_percent" : 5,
-          "kpis" : [ "kpis", "kpis" ],
-          "prints_and_graphics" : [ 3, 3 ],
-          "start_date" : "start_date",
-          "price_comparison_currency" : "price_comparison_currency"
-        },
-        "params" : {
-          "retailers" : [ 1, 1 ],
-          "display_currency" : "USD",
-          "exclude_others" : [ "age_ranges", "age_ranges" ],
-          "view_by" : "brand",
-          "offset" : 6,
-          "limit" : 0,
-          "sorts" : {
-            "field" : [ "retailers", "retailers" ],
-            "order_by" : "order_by",
-            "direction" : "direction"
-          }
-        },
-        "hash" : "a842c9503465497ea0"
+      "example":{
+        "countries": ["US", "GB"],
+        "departments": ["727", "930"],
+        "followed_retailers": ["153", "30"],
+        "markets": [],
+        "job_role": "buyer",
+        "my_company": "WGSN",
+        "competitors": ["456"]
       }
     },
-    "Dashboard_params_sorts" : {
-      "properties" : {
-        "direction" : {
-          "type" : "string"
-        },
-        "field" : {
-          "type" : "array",
-          "items" : {
-            "type" : "string",
-            "example" : "retailers"
+    "UserReports" : {
+      "type" : "object",
+      "example":{
+        "comshopper" : [
+          {
+          "date_created": "2018-08-15 17:46:24",
+          "date_edited" : "2018-08-15 17:46:25",
+          "id": "96761",
+          "last_viewed":"2018-08-15 17:46:25",
+          "name": "Red dresses",
+          "type_id" :"1"
           }
-        },
-        "order_by" : {
-          "type" : "string"
-        }
-      },
-      "example" : {
-        "field" : [ "retailers", "retailers" ],
-        "order_by" : "order_by",
-        "direction" : "direction"
+        ],
+        "dashboard": []
+
       }
     },
-    "Dashboard_params" : {
-      "properties" : {
-        "view_by" : {
-          "example" : "brand",
-          "description" : "view by"
-        },
-        "limit" : {
-          "type" : "integer"
-        },
-        "offset" : {
-          "type" : "integer"
-        },
-        "retailers" : {
-          "type" : "array",
-          "items" : {
-            "type" : "integer"
-          }
-        },
-        "display_currency" : {
-          "example" : "USD"
-        },
-        "exclude_others" : {
-          "type" : "array",
-          "items" : {
-            "type" : "string",
-            "enum" : [ "age_ranges", "materials", "print_and_graphics", "colors", "brands" ]
-          }
-        },
-        "sorts" : {
-          "$ref" : "#/definitions/Dashboard_params_sorts"
+    "Product" :{
+      "type" : "object",
+      "example": {
+          "product_id": "53480285",
+          "name": "Luxe Side Split Skirt",
+          "first_seen_date": "2018-08-29 00:00:00",
+          "image_url": "/storage/vol19/ProductImages/decjuba-au/2/C/A/2CA1C5BA1966B47FCE3FF5C315F39A1D.jpg",
+          "country": {
+            "label": "Australia",
+            "code": "AU"
+          },
+          "retailer": "Decjuba",
+          "max_price": {
+            "value": 59.95,
+            "currency": "AUD"
+          },
+          "min_price": {
+            "value": 59.95,
+            "currency": "AUD"
+          },
+          "brand": "Decjuba",
+          "colors": [
+            "Black"
+          ],
+          "statuses": [
+             "in_stock",
+             "new_in",
+             "full_price"
+           ],
+          "favorite": false
         }
-      },
-      "example" : {
-        "retailers" : [ 1, 1 ],
-        "display_currency" : "USD",
-        "exclude_others" : [ "age_ranges", "age_ranges" ],
-        "view_by" : "brand",
-        "offset" : 6,
-        "limit" : 0,
-        "sorts" : {
-          "field" : [ "retailers", "retailers" ],
-          "order_by" : "order_by",
-          "direction" : "direction"
-        }
+    },
+    "Skus": {
+      "type": "object",
+      "example": {
+          "id": 1596161631,
+          "original_price": {
+            "amount": 49.99,
+            "currency": "AUD"
+          },
+          "images": [
+            {
+              "is_default": true,
+              "url": "/storage/vol19/ProductImages/rockmans-au/3/3/F/33F4007D44C67C22C3D861EA7A7ADB23.jpg"
+            }
+          ],
+          "restock_count": 0,
+          "days_in_stock": 2,
+          "days_out_of_stock": 0,
+          "first_price": {
+            "amount": 49.99,
+            "currency": "AUD",
+            "date": "2018-08-29 00:00:00"
+          },
+          "last_price": {
+            "amount": 49.99,
+            "currency": "AUD",
+            "date": "2018-08-29 00:00:00"
+          },
+          "min_prices": [
+            {
+              "amount": 49.99,
+              "currency": "AUD",
+              "date": "2018-08-29 00:00:00"
+            }
+          ],
+          "max_prices": [
+            {
+              "amount": 49.99,
+              "currency": "AUD",
+              "date": "2018-08-29 00:00:00"
+            }
+          ],
+          "history": [
+            {
+              "id": 1596161631,
+              "start_date": "2018-08-29 00:00:00",
+              "end_date": "2018-08-30 00:00:00",
+              "price": {
+                "amount": 49.99,
+                "currency": "AUD"
+              },
+              "is_in_stock": 1,
+              "is_restocked": false,
+              "amount_price_change": 49.99,
+              "percent_price_change": 0
+            }
+          ]
       }
     },
-    "Dashboard_filters" : {
-      "properties" : {
-        "kpis" : {
-          "type" : "array",
-          "items" : {
-            "type" : "string"
-          }
-        },
-        "max_markdown_percent" : {
-          "type" : "integer"
-        },
-        "min_markdown_percent" : {
-          "type" : "integer"
-        },
-        "dates" : {
-          "example" : "this_week"
-        },
-        "start_date" : {
-          "type" : "string"
-        },
-        "end_date" : {
-          "type" : "string"
-        },
-        "countries" : {
-          "type" : "array",
-          "items" : {
-            "type" : "string"
-          }
-        },
-        "retailers" : {
-          "type" : "array",
-          "items" : {
-            "type" : "string"
-          }
-        },
-        "taxonomies" : {
-          "type" : "array",
-          "items" : {
-            "type" : "string"
-          }
-        },
-        "min_price" : {
-          "type" : "integer"
-        },
-        "max_price" : {
-          "type" : "integer"
-        },
-        "price_comparison_currency" : {
-          "type" : "string"
-        },
-        "colors" : {
-          "type" : "array",
-          "items" : {
-            "type" : "integer"
-          }
-        },
-        "prints_and_graphics" : {
-          "type" : "array",
-          "items" : {
-            "type" : "integer"
-          }
-        },
-        "materials" : {
-          "type" : "array",
-          "items" : {
-            "type" : "integer"
-          }
+    "Product_detail":{
+      "type": "object",
+      "example": {
+          "country": {
+            "code": "AU",
+            "label": "Australia"
+          },
+          "first_seen_date": "2018-08-29 00:00:00",
+          "last_seen_date": "2018-08-29 00:00:00",
+          "image": "/storage/vol19/ProductImages/rockmans-au/3/3/F/33F4007D44C67C22C3D861EA7A7ADB23.jpg",
+          "materials": [
+            {
+              "id": "18",
+              "label": "Other"
+            }
+          ],
+          "name": "Rockmans Elbow Sleeve Split Bow Detail Knit",
+          "original_price": {
+            "amount": 49.99,
+            "currency": "AUD"
+          },
+          "product_url": "https://www.rockmans.com.au/clothing/knitwear/rockmans-elbow-sleeve-split-bow-detail-knit/iris",
+          "retailer": {
+            "id": 393,
+            "label": "Rockmans",
+            "code": "rockmans-au"
+          },
+
+          "composition": null,
+          "ioos_released": true,
+          "available_selections": {
+            "all_colors": [
+              {
+                "id": "4657",
+                "count": 6,
+                "label": "Iris",
+                "group": {
+                  "id": "678",
+                  "label": "Blue"
+                }
+              }
+            ],
+            "all_prints_and_graphics": [
+              {
+                "id": "9",
+                "count": 6,
+                "label": "Other"
+              }
+            ],
+            "all_sizes": [
+              {
+                "id": "733",
+                "count": 1,
+                "label": "XS"
+              },
+              {
+                "id": "677",
+                "count": 1,
+                "label": "S"
+              },
+              {
+                "id": "727",
+                "count": 1,
+                "label": "M"
+              },
+              {
+                "id": "748",
+                "count": 1,
+                "label": "L"
+              },
+              {
+                "id": "769",
+                "count": 1,
+                "label": "XL"
+              },
+              {
+                "id": "843",
+                "count": 1,
+                "label": "XXL"
+              }
+            ]
+          },
+          "selection": {
+            "color": {
+              "id": "4657",
+              "label": "Iris",
+              "group": {
+                "id": "678",
+                "label": "Blue"
+              }
+            },
+            "print_or_graphic": {
+              "id": "9",
+              "label": "Other"
+            },
+            "size": {
+              "id": "733",
+              "label": "XS"
+            }
+          },
+          "brand": {
+            "id": "3566655",
+            "label": "rockmans"
+          },
+          "subcategories": [
+            {
+              "id": 823,
+              "label": "Jumpers & sweaters"
+            }
+          ],
+          "categories": [
+            {
+              "id": 816,
+              "label": "Knitwear"
+            }
+          ],
+          "departments": [
+            {
+              "id": 727,
+              "label": "Apparel"
+            }
+          ],
+          "markets": [
+            {
+              "id": 726,
+              "label": "Womens"
+            }
+          ],
+          "max_markdown_percent": 0,
+          "min_markdown_percent": 0,
+          "max_markup_percent": 0,
+          "min_markup_percent": 0,
+          "max_prices": [
+            {
+              "amount": 49.99,
+              "currency": "AUD"
+            }
+          ],
+          "min_prices": [
+            {
+              "amount": 49.99,
+              "currency": "AUD"
+            }
+          ],
+          "restock_count": 0
         }
-      },
-      "example" : {
-        "end_date" : "end_date",
-        "retailers" : [ "retailers", "retailers" ],
-        "max_markdown_percent" : 5,
-        "dates" : "this_week",
-        "countries" : [ "countries", "countries" ],
-        "colors" : [ 9, 9 ],
-        "max_price" : 7,
-        "min_price" : 2,
-        "taxonomies" : [ "taxonomies", "taxonomies" ],
-        "materials" : [ 2, 2 ],
-        "min_markdown_percent" : 5,
-        "kpis" : [ "kpis", "kpis" ],
-        "prints_and_graphics" : [ 3, 3 ],
-        "start_date" : "start_date",
-        "price_comparison_currency" : "price_comparison_currency"
-      }
+    },
+
+    "Dashboard":{
+      "type": "object",
+      "example": {
+        "totals": {
+          "id": "totals",
+          "product_count": 65971,
+          "count": 65971,
+          "numResults": 36,
+          "average": 1833,
+          "average_products": 1833,
+          "categories": [
+            {
+              "product_count": 14927,
+              "count": 14927,
+              "id": 64,
+              "label": "Tops",
+              "taxonomies": [
+                79,
+                303,
+                547,
+                897
+              ],
+              "parent_ids": [
+                3,
+                187,
+                455,
+                727
+              ],
+              "numResults": 33,
+              "average": 452,
+              "average_products": 452
+            },
+            {
+              "product_count": 11706,
+              "count": 11706,
+              "id": 147,
+              "label": "Dresses",
+              "taxonomies": [
+                207,
+                744
+              ],
+              "parent_ids": [
+                187,
+                727
+              ],
+              "numResults": 33,
+              "average": 355,
+              "average_products": 355
+            },
+            {
+              "product_count": 5538,
+              "count": 5538,
+              "id": 343,
+              "label": "Lingerie/Intimates",
+              "taxonomies": [
+                827
+              ],
+              "parent_ids": [
+                727
+              ],
+              "numResults": 28,
+              "average": 198,
+              "average_products": 198
+            },
+            {
+              "product_count": 4357,
+              "count": 4357,
+              "id": 39,
+              "label": "Knitwear",
+              "taxonomies": [
+                44,
+                257,
+                504,
+                816
+              ],
+              "parent_ids": [
+                3,
+                187,
+                455,
+                727
+              ],
+              "numResults": 33,
+              "average": 132,
+              "average_products": 132
+            },
+            {
+              "product_count": 4300,
+              "count": 4300,
+              "id": 350,
+              "label": "Shirts & blouses",
+              "taxonomies": [
+                840
+              ],
+              "parent_ids": [
+                727
+              ],
+              "numResults": 33,
+              "average": 130,
+              "average_products": 130
+            },
+            {
+              "product_count": 3733,
+              "count": 3733,
+              "id": 16,
+              "label": "Fitness & activewear",
+              "taxonomies": [
+                18,
+                227,
+                468,
+                773
+              ],
+              "parent_ids": [
+                3,
+                187,
+                455,
+                727
+              ],
+              "numResults": 20,
+              "average": 187,
+              "average_products": 187
+            },
+            {
+              "product_count": 3472,
+              "count": 3472,
+              "id": 76,
+              "label": "Trousers/pants",
+              "taxonomies": [
+                93,
+                318,
+                558,
+                914
+              ],
+              "parent_ids": [
+                3,
+                187,
+                455,
+                727
+              ],
+              "numResults": 33,
+              "average": 105,
+              "average_products": 105
+            },
+            {
+              "product_count": 3204,
+              "count": 3204,
+              "id": 53,
+              "label": "Swim",
+              "taxonomies": [
+                65,
+                294,
+                535,
+                886
+              ],
+              "parent_ids": [
+                3,
+                187,
+                455,
+                727
+              ],
+              "numResults": 18,
+              "average": 178,
+              "average_products": 178
+            },
+            {
+              "product_count": 3099,
+              "count": 3099,
+              "id": 32,
+              "label": "Jeans",
+              "taxonomies": [
+                35,
+                245,
+                490,
+                799
+              ],
+              "parent_ids": [
+                3,
+                187,
+                455,
+                727
+              ],
+              "numResults": 32,
+              "average": 97,
+              "average_products": 97
+            },
+            {
+              "product_count": 3053,
+              "count": 3053,
+              "id": 171,
+              "label": "Skirts",
+              "taxonomies": [
+                274,
+                861
+              ],
+              "parent_ids": [
+                187,
+                727
+              ],
+              "numResults": 32,
+              "average": 95,
+              "average_products": 95
+            },
+            {
+              "product_count": 2807,
+              "count": 2807,
+              "id": 20,
+              "label": "Jackets",
+              "taxonomies": [
+                22,
+                231,
+                472,
+                778
+              ],
+              "parent_ids": [
+                3,
+                187,
+                455,
+                727
+              ],
+              "numResults": 34,
+              "average": 83,
+              "average_products": 83
+            },
+            {
+              "product_count": 1738,
+              "count": 1738,
+              "id": 49,
+              "label": "Sleepwear",
+              "taxonomies": [
+                60,
+                288,
+                530,
+                878
+              ],
+              "parent_ids": [
+                3,
+                187,
+                455,
+                727
+              ],
+              "numResults": 18,
+              "average": 97,
+              "average_products": 97
+            },
+            {
+              "product_count": 1594,
+              "count": 1594,
+              "id": 341,
+              "label": "Jumpsuits & playsuits",
+              "taxonomies": [
+                811
+              ],
+              "parent_ids": [
+                727
+              ],
+              "numResults": 29,
+              "average": 55,
+              "average_products": 55
+            },
+            {
+              "product_count": 1545,
+              "count": 1545,
+              "id": 43,
+              "label": "Shorts",
+              "taxonomies": [
+                52,
+                265,
+                521,
+                850
+              ],
+              "parent_ids": [
+                3,
+                187,
+                455,
+                727
+              ],
+              "numResults": 33,
+              "average": 47,
+              "average_products": 47
+            },
+            {
+              "product_count": 1007,
+              "count": 1007,
+              "id": 11,
+              "label": "Coats",
+              "taxonomies": [
+                12,
+                196,
+                456,
+                728
+              ],
+              "parent_ids": [
+                3,
+                187,
+                455,
+                727
+              ],
+              "numResults": 32,
+              "average": 31,
+              "average_products": 31
+            },
+            {
+              "product_count": 32,
+              "count": 32,
+              "id": 58,
+              "label": "Tailoring",
+              "taxonomies": [
+                72,
+                540,
+                1678
+              ],
+              "parent_ids": [
+                3,
+                455,
+                727
+              ],
+              "numResults": 10,
+              "average": 3,
+              "average_products": 3
+            },
+            {
+              "product_count": 22,
+              "count": 22,
+              "id": 83,
+              "label": "Underwear",
+              "taxonomies": [
+                103,
+                328,
+                570
+              ],
+              "parent_ids": [
+                3,
+                187,
+                455
+              ],
+              "numResults": 4,
+              "average": 6,
+              "average_products": 6
+            },
+            {
+              "product_count": 8,
+              "count": 8,
+              "id": 415,
+              "label": "Suits & sets",
+              "taxonomies": [
+                1208,
+                1222,
+                1381,
+                1459
+              ],
+              "parent_ids": [
+                3,
+                187,
+                455,
+                727
+              ],
+              "numResults": 2,
+              "average": 4,
+              "average_products": 4
+            }
+          ]
+        },
+        "retailers" : [
+              {
+                  "id": 1,
+                  "product_count": 33217,
+                  "count": 33217,
+                  "label": "The Iconic",
+                  "country": {
+                    "code": "AU",
+                    "label": "Australia"
+                  },
+                  "categories": [
+                    {
+                      "product_count": 8187,
+                      "count": 8187,
+                      "id": 147,
+                      "label": "Dresses",
+                      "taxonomies": [
+                        207,
+                        744
+                      ],
+                      "parent_ids": [
+                        187,
+                        727
+                      ]
+                    },
+                    {
+                      "product_count": 6486,
+                      "count": 6486,
+                      "id": 64,
+                      "label": "Tops",
+                      "taxonomies": [
+                        79,
+                        303,
+                        547,
+                        897
+                      ],
+                      "parent_ids": [
+                        3,
+                        187,
+                        455,
+                        727
+                      ]
+                    },
+                    {
+                      "product_count": 2674,
+                      "count": 2674,
+                      "id": 16,
+                      "label": "Fitness & activewear",
+                      "taxonomies": [
+                        18,
+                        227,
+                        468,
+                        773
+                      ],
+                      "parent_ids": [
+                        3,
+                        187,
+                        455,
+                        727
+                      ]
+                    },
+                    {
+                      "product_count": 2183,
+                      "count": 2183,
+                      "id": 53,
+                      "label": "Swim",
+                      "taxonomies": [
+                        65,
+                        294,
+                        535,
+                        886
+                      ],
+                      "parent_ids": [
+                        3,
+                        187,
+                        455,
+                        727
+                      ]
+                    },
+                    {
+                      "product_count": 2167,
+                      "count": 2167,
+                      "id": 350,
+                      "label": "Shirts & blouses",
+                      "taxonomies": [
+                        840
+                      ],
+                      "parent_ids": [
+                        727
+                      ]
+                    },
+                    {
+                      "product_count": 1770,
+                      "count": 1770,
+                      "id": 343,
+                      "label": "Lingerie/Intimates",
+                      "taxonomies": [
+                        827
+                      ],
+                      "parent_ids": [
+                        727
+                      ]
+                    },
+                    {
+                      "product_count": 1698,
+                      "count": 1698,
+                      "id": 39,
+                      "label": "Knitwear",
+                      "taxonomies": [
+                        44,
+                        257,
+                        504,
+                        816
+                      ],
+                      "parent_ids": [
+                        3,
+                        187,
+                        455,
+                        727
+                      ]
+                    },
+                    {
+                      "product_count": 1556,
+                      "count": 1556,
+                      "id": 76,
+                      "label": "Trousers/pants",
+                      "taxonomies": [
+                        93,
+                        318,
+                        558,
+                        914
+                      ],
+                      "parent_ids": [
+                        3,
+                        187,
+                        455,
+                        727
+                      ]
+                    },
+                    {
+                      "product_count": 1554,
+                      "count": 1554,
+                      "id": 171,
+                      "label": "Skirts",
+                      "taxonomies": [
+                        274,
+                        861
+                      ],
+                      "parent_ids": [
+                        187,
+                        727
+                      ]
+                    },
+                    {
+                      "product_count": 1412,
+                      "count": 1412,
+                      "id": 20,
+                      "label": "Jackets",
+                      "taxonomies": [
+                        22,
+                        231,
+                        472,
+                        778
+                      ],
+                      "parent_ids": [
+                        3,
+                        187,
+                        455,
+                        727
+                      ]
+                    },
+                    {
+                      "product_count": 1111,
+                      "count": 1111,
+                      "id": 32,
+                      "label": "Jeans",
+                      "taxonomies": [
+                        35,
+                        245,
+                        490,
+                        799
+                      ],
+                      "parent_ids": [
+                        3,
+                        187,
+                        455,
+                        727
+                      ]
+                    },
+                    {
+                      "product_count": 955,
+                      "count": 955,
+                      "id": 341,
+                      "label": "Jumpsuits & playsuits",
+                      "taxonomies": [
+                        811
+                      ],
+                      "parent_ids": [
+                        727
+                      ]
+                    },
+                    {
+                      "product_count": 544,
+                      "count": 544,
+                      "id": 49,
+                      "label": "Sleepwear",
+                      "taxonomies": [
+                        60,
+                        288,
+                        530,
+                        878
+                      ],
+                      "parent_ids": [
+                        3,
+                        187,
+                        455,
+                        727
+                      ]
+                    },
+                    {
+                      "product_count": 499,
+                      "count": 499,
+                      "id": 11,
+                      "label": "Coats",
+                      "taxonomies": [
+                        12,
+                        196,
+                        456,
+                        728
+                      ],
+                      "parent_ids": [
+                        3,
+                        187,
+                        455,
+                        727
+                      ]
+                    },
+                    {
+                      "product_count": 472,
+                      "count": 472,
+                      "id": 43,
+                      "label": "Shorts",
+                      "taxonomies": [
+                        52,
+                        265,
+                        521,
+                        850
+                      ],
+                      "parent_ids": [
+                        3,
+                        187,
+                        455,
+                        727
+                      ]
+                    },
+                    {
+                      "product_count": 14,
+                      "count": 14,
+                      "id": 83,
+                      "label": "Underwear",
+                      "taxonomies": [
+                        103,
+                        328,
+                        570
+                      ],
+                      "parent_ids": [
+                        3,
+                        187,
+                        455
+                      ]
+                    },
+                    {
+                      "product_count": 10,
+                      "count": 10,
+                      "id": 58,
+                      "label": "Tailoring",
+                      "taxonomies": [
+                        72,
+                        540,
+                        1678
+                      ],
+                      "parent_ids": [
+                        3,
+                        455,
+                        727
+                      ]
+                    },
+                    {
+                      "product_count": 4,
+                      "count": 4,
+                      "id": 415,
+                      "label": "Suits & sets",
+                      "taxonomies": [
+                        1208,
+                        1222,
+                        1381,
+                        1459
+                      ],
+                      "parent_ids": [
+                        3,
+                        187,
+                        455,
+                        727
+                      ]
+                    }
+                  ]
+                },
+              ]
+            }
+    },
+
+    "Categories": {
+      "example": {
+          "results": [
+          {
+          "term_id": 4,
+          "parent_id": 3,
+          "translation": "All-in-one",
+          "depth": 3
+          }
+          ],
+          "meta": { }
+          }
     }
-  }
+ }
 }

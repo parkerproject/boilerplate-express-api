@@ -6,7 +6,7 @@ class ProductModel {
   all(query, cb) {
     const { limit = 15, offset = 0, name } = query;
 
-    let sql = `select ret.name AS retailer,
+    const sql = `select ret.name AS retailer,
                 p.name, c.code_2 AS country,
                 t.translation AS brand,
                 p.image_filename,
@@ -25,17 +25,17 @@ class ProductModel {
                 WHERE p.active = 1
                 LIMIT ${limit} OFFSET ${offset};`;
 
-    // const solrQuery = solrClient.createQuery().q({ title_t: 'laptop' }).start(0).rows(5);
+    // const solrQuery = solrClient.createQuery().q({ title_t: 'red' }).start(0).rows(5);
 
 
-    if (name) {
-      let translations = name.split(',');
-      translations = translations.map(val => `"${val}"`).join(',');
-      sql = `select tx.term_id, tx.parent_id, t.translation, tx.depth from taxonomies tx
-                  LEFT JOIN terms t on tx.term_id = t.id
-                  WHERE tx.depth = 3 AND t.translation IN (${translations})
-                  GROUP BY t.translation LIMIT ${limit} OFFSET ${offset}`;
-    }
+    // if (name) {
+    //   let translations = name.split(',');
+    //   translations = translations.map(val => `"${val}"`).join(',');
+    //   sql = `select tx.term_id, tx.parent_id, t.translation, tx.depth from taxonomies tx
+    //               LEFT JOIN terms t on tx.term_id = t.id
+    //               WHERE tx.depth = 3 AND t.translation IN (${translations})
+    //               GROUP BY t.translation LIMIT ${limit} OFFSET ${offset}`;
+    // }
 
     /* Implement stored procedures
        1. get the defined query params from the request
@@ -54,7 +54,7 @@ class ProductModel {
     //   if (err) {
     //     console.log(err);
     //   } else {
-    //     cb({});
+    //     cb(obj);
     //   }
     // });
   }
