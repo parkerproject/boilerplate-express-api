@@ -5,7 +5,13 @@ class RetailerModel {
   all(query, cb) {
     const { limit = 15, offset = 0 } = query;
 
-    let sql = `SELECT * FROM retailers LIMIT ${limit} OFFSET ${offset}`;
+    let sql = `SELECT
+                name,
+                code,
+                price_group_id,
+                currency_id,
+                retailer_type_id
+                FROM retailers LIMIT ${limit} OFFSET ${offset}`;
 
 
     /* Implement stored procedures
