@@ -1,16 +1,13 @@
 const RetailerModel = require('./RetailerModel');
 
 class RetailerController {
-  all(req, res, next) {
+  index(req, res, next) {
     console.log(next);
     /*
 
     */
-    RetailerModel.all(req.query, r => {
-      res.json({
-        results: r,
-        meta: {},
-      });
+    RetailerModel.index(req.query, (results, meta) => {
+      res.json({ results, meta });
     });
 
     //

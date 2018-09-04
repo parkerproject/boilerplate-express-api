@@ -1,39 +1,59 @@
-// import { pickBy, identity, map } from 'lodash';
+const { pickBy, identity, omit } = require('lodash');
+const mysql = require('mysql');
 const db = require('../../config/database');
 
 class RetailerModel {
-  all(query, cb) {
+  index(query, cb) {
     const { limit = 15, offset = 0 } = query;
+    let where = false;
+    const limitOffset = `LIMIT ${mysql.escape(offset)}, ${mysql.escape(limit)}`;
+    let preparedQuery = `SELECT name, country_id, code, price_group_id, currency_id, retailer_type_id
+                         FROM retailers`;
 
-    let sql = `SELECT
-                name,
-                code,
-                price_group_id,
-                currency_id,
-                retailer_type_id
-                FROM retailers LIMIT ${limit} OFFSET ${offset}`;
+    // const totalQuery = 'SELECT count(*) FROM retailers';
 
 
-    /* Implement stored procedures
-       1. get the defined query params from the request
-          => const conditions = pickBy(query, identity);
-       2. refactor the query to use stored procedures
-    */
+    let definedParams = pickBy(query, identity);
+    definedParams = omit(definedParams, ['limit', 'offset']);
+
+    const definedParamsKeys = Object.keys(definedParams);
+    if (definedParamsKeys.length > 0) where = true;
+
+    let conditions = definedParamsKeys.map(val => {
+      const assignRightType = Number(definedParams[val]);
+
+      let str = Number.isNaN(assignRightType)
+        ? `${val} = "${mysql.escape(definedParams[val])}"`
+        : `${val} = ${mysql.escape(definedParams[val])}`;
+
+      if (val === 'retailer_code') {
+        str = `code = "${mysql.escape(definedParams[val])}"`;
+      }
+
+      return str;
+    });
+
+    conditions = conditions.join(' AND ');
+
+    preparedQuery = where ? `${preparedQuery} WHERE ${conditions} ${limitOffset}` : `${preparedQuery} ${limitOffset}`;
 
 
-    if (query.retailer_code) {
-      const retailerCode = query.retailer_code ? query.retailer_code.split(',') : '';
-      sql = `SELECT * FROM retailers WHERE code ="${retailerCode}" LIMIT ${limit} OFFSET ${offset}`;
-    }
+    // db.query(preparedQuery, (err, results) => {
+    //   if (err) throw err;
+    //   db.query(totalQuery, (error, total) => {
+    //     if (error) throw error;
+    //     cb(results, total);
+    //   });
+    // });
 
-    db.query(sql, (err, results) => {
+    db.query(preparedQuery, (err, results) => {
       if (err) throw err;
-      cb(results);
+      cb(results, { total: null, limit, offset });
     });
   }
 
-  byId(id) {
-    return id;
+  end() {
+    return db.end();
   }
 }
 
