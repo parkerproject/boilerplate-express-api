@@ -2,16 +2,10 @@ const RetailerModel = require('./RetailerModel');
 
 class RetailerController {
   index(req, res, next) {
-    console.log(next);
-    /*
-
-    */
     RetailerModel.index(req.query, (results, meta) => {
       res.json({ results, meta });
+      next();
     });
-
-    //
-    // res.boom.badRequest(e);
   }
 }
 

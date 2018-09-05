@@ -10,15 +10,23 @@ class RetailerModel {
     let preparedQuery = `SELECT name, country_id, code, price_group_id, currency_id, retailer_type_id
                          FROM retailers`;
 
-    // const totalQuery = 'SELECT count(*) FROM retailers';
+    const totalQuery = 'SELECT count(*) AS total FROM retailers';
 
-
+    /*
+    pick all the defined params and ignore limit and filter param
+    */
     let definedParams = pickBy(query, identity);
     definedParams = omit(definedParams, ['limit', 'offset']);
 
+    /*
+     set the WHERE flag to true if there are params in the request
+   */
     const definedParamsKeys = Object.keys(definedParams);
     if (definedParamsKeys.length > 0) where = true;
 
+    /*
+    clean up the params making sure numbers are set as numbers and the rest ignored
+   */
     let conditions = definedParamsKeys.map(val => {
       const assignRightType = Number(definedParams[val]);
 
@@ -26,6 +34,8 @@ class RetailerModel {
         ? `${val} = "${mysql.escape(definedParams[val])}"`
         : `${val} = ${mysql.escape(definedParams[val])}`;
 
+
+      /*  map retailer_code to code */
       if (val === 'retailer_code') {
         str = `code = "${mysql.escape(definedParams[val])}"`;
       }
@@ -38,17 +48,12 @@ class RetailerModel {
     preparedQuery = where ? `${preparedQuery} WHERE ${conditions} ${limitOffset}` : `${preparedQuery} ${limitOffset}`;
 
 
-    // db.query(preparedQuery, (err, results) => {
-    //   if (err) throw err;
-    //   db.query(totalQuery, (error, total) => {
-    //     if (error) throw error;
-    //     cb(results, total);
-    //   });
-    // });
-
     db.query(preparedQuery, (err, results) => {
       if (err) throw err;
-      cb(results, { total: null, limit, offset });
+      db.query(totalQuery, (error, total) => {
+        if (error) throw error;
+        cb(results, { total: total[0].total, limit, offset });
+      });
     });
   }
 
