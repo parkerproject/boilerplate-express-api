@@ -6,6 +6,7 @@ const config = {
     user: 'data user',
     password: 'test',
     database: 'database',
+    connectionLimit: 10,
   },
   development: {
     host: process.env.MYSQL_DEV_HOST,
@@ -13,6 +14,7 @@ const config = {
     password: process.env.MYSQL_DEV_PASSWORD,
     database: 'ginger',
     port: '3306',
+    connectionLimit: 10,
   },
   qa: {
     host: process.env.MYSQL_QA_HOST,
@@ -20,10 +22,12 @@ const config = {
     password: process.env.MYSQL_QA_PASSWORD,
     database: 'ginger',
     port: '3306',
+    connectionLimit: 10,
   },
 };
 
 
 const connection = config[process.env.NODE_ENV] || config.development;
 
-module.exports = mysql.createConnection(connection);
+
+module.exports = mysql.createPool(connection);

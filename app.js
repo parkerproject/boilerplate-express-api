@@ -6,3 +6,4 @@ const Server = require('./server');
 const routes = require('./routes');
 
 Server.router(routes).listen(process.env.PORT);
+Server.errorHandler();

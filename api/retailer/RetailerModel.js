@@ -49,9 +49,9 @@ class RetailerModel {
 
 
     db.query(preparedQuery, (err, results) => {
-      if (err) throw err;
+      if (err) console.log(err);
       db.query(totalQuery, (error, total) => {
-        if (error) throw error;
+        if (error) console.log(error);
         cb(results, { total: total[0].total, limit, offset });
       });
     });

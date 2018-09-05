@@ -9,6 +9,7 @@ const logger = require('./common/logger');
 
 const app = new Express();
 
+
 class ExpressServer {
   constructor() {
     app.set('appPath', `${__dirname}client`);
@@ -28,6 +29,15 @@ class ExpressServer {
     const welcome = p => () => logger.info(`up and running in ${process.env.NODE_ENV || 'development'} @: ${os.hostname()} on port: ${p}}`);
     http.createServer(app).listen(port, welcome(port));
     return app;
+  }
+
+  errorHandler() {
+    process.on('unhandledRejection', (reason, p) => {
+      console.log(`process=> ${p}`);
+    });
+    process.on('uncaughtException', error => {
+      console.log(`process=> ${error}`);
+    });
   }
 }
 
