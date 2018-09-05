@@ -2,11 +2,8 @@ const BrandModel = require('./BrandModel');
 
 class BrandController {
   all(req, res) {
-    BrandModel.all(req.query, r => {
-      res.json({
-        results: r,
-        meta: {},
-      });
+    BrandModel.all(req.query, (results, meta) => {
+      res.json({ results, meta });
     });
 
     //

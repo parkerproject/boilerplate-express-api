@@ -28,9 +28,9 @@
         "summary" : "All Retailers",
         "produces" : [ "application/json" ],
         "parameters" : [ {
-          "name" : "retailer_code",
+          "name" : "code",
           "in" : "query",
-          "description" : "filter retailer by retailer code,  retailer_code=zara,macy",
+          "description" : "filter by retailer code,  code=zara,macy",
           "required" : false,
           "type" : "string"
         },{
