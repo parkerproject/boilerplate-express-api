@@ -46,4 +46,8 @@ module.exports = {
     offset: Joi.types.Number(),
   },
 
+  marketSchema: {
+    name: Joi.types.String(),
+  },
+
 };

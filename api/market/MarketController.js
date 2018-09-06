@@ -2,11 +2,8 @@ const MarketModel = require('./MarketModel');
 
 class MarketController {
   all(req, res) {
-    MarketModel.all(req.query, r => {
-      res.json({
-        results: r,
-        meta: {},
-      });
+    MarketModel.all(req.query, (results, meta) => {
+      res.json({ results, meta });
     });
 
     //
