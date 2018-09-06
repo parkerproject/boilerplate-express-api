@@ -1,9 +1,11 @@
-// import { pickBy, identity, map } from 'lodash';
+const mysql = require('mysql');
 const db = require('../../config/database');
 
 class MarketModel {
   all(query, cb) {
-    const { limit = 15, offset = 0, name } = query;
+    let { limit = 15, offset = 0 } = query;
+    limit = Number(limit);
+    offset = Number(offset);
 
     let sql = `select tx.term_id, tx.parent_id, t.translation, tx.depth from taxonomies tx
                 LEFT JOIN terms t on tx.term_id = t.id
@@ -11,25 +13,19 @@ class MarketModel {
                 GROUP BY t.translation LIMIT ${offset}, ${limit}`;
 
 
-    if (name) {
-      let translations = name.split(',');
-      translations = translations.map(val => `"${val}"`).join(',');
+    if (query.name) {
+      let translations = query.name.split(',');
+      translations = translations.map(val => mysql.escape(val)).join(',');
       sql = `select tx.term_id, tx.parent_id, t.translation, tx.depth from taxonomies tx
                   LEFT JOIN terms t on tx.term_id = t.id
-                  WHERE tx.depth = 3 AND t.translation IN (${translations})
-                  GROUP BY t.translation LIMIT ${limit} OFFSET ${offset}`;
+                  WHERE tx.depth = 1 AND t.translation IN (${translations})
+                  GROUP BY t.translation LIMIT ${offset}, ${limit}`;
     }
-
-    /* Implement stored procedures
-       1. get the defined query params from the request
-          => const conditions = pickBy(query, identity);
-       2. refactor the query to use stored procedures
-    */
 
 
     db.query(sql, (err, results) => {
       if (err) throw err;
-      cb(results);
+      cb(results, { total: results.length, limit, offset });
     });
   }
 
