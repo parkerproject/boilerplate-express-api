@@ -1,34 +1,26 @@
-// import { pickBy, identity, map } from 'lodash';
+const mysql = require('mysql');
 const db = require('../../config/database');
 
 class CountryModel {
   all(query, cb) {
-    const { limit = 15, offset = 0 } = query;
+    let { limit = 15, offset = 0 } = query;
+    limit = Number(limit);
+    offset = Number(offset);
 
-    let sql = `select * from countries LIMIT ${limit} OFFSET ${offset};`;
+    let sql = `select * from countries LIMIT ${offset}, ${limit};`;
 
 
     if (query.country_code) {
       let translations = query.country_code.split(',');
-      translations = translations.map(val => `"${val}"`).join(',');
-      sql = `select * from countries where code_3 IN (${translations}) LIMIT ${limit} OFFSET ${offset};`;
+      translations = translations.map(val => mysql.escape(val)).join(',');
+      sql = `select * from countries where code_3 IN (${translations}) LIMIT ${offset}, ${limit};`;
     }
-
-    /* Implement stored procedures
-       1. get the defined query params from the request
-          => const conditions = pickBy(query, identity);
-       2. refactor the query to use stored procedures
-    */
 
 
     db.query(sql, (err, results) => {
       if (err) throw err;
-      cb(results);
+      cb(results, { total: results.length, limit, offset });
     });
-  }
-
-  byId(id) {
-    return id;
   }
 }
 

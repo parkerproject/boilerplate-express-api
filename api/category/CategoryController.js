@@ -2,15 +2,9 @@ const CategoryModel = require('./CategoryModel');
 
 class CategoryController {
   all(req, res) {
-    CategoryModel.all(req.query, r => {
-      res.json({
-        results: r,
-        meta: {},
-      });
+    CategoryModel.all(req.query, (results, meta) => {
+      res.json({ results, meta });
     });
-
-    //
-    // res.boom.badRequest(e);
   }
 }
 module.exports = new CategoryController();

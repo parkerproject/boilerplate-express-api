@@ -8,7 +8,7 @@ class MarketModel {
     let sql = `select tx.term_id, tx.parent_id, t.translation, tx.depth from taxonomies tx
                 LEFT JOIN terms t on tx.term_id = t.id
                 WHERE tx.depth = 1
-                GROUP BY t.translation LIMIT ${limit} OFFSET ${offset}`;
+                GROUP BY t.translation LIMIT ${offset}, ${limit}`;
 
 
     if (name) {

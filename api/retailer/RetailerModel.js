@@ -5,9 +5,11 @@ const db = require('../../config/database');
 
 class RetailerModel {
   index(query, cb) {
-    const { limit = 15, offset = 0 } = query;
+    let { limit = 15, offset = 0 } = query;
+    limit = Number(limit);
+    offset = Number(offset);
     let where = false;
-    const limitOffset = `LIMIT ${mysql.escape(offset)}, ${mysql.escape(limit)}`;
+    const limitOffset = `LIMIT ${offset}, ${limit}`;
     let preparedQuery = `SELECT name, country_id, code, price_group_id, currency_id, retailer_type_id
                          FROM retailers`;
 

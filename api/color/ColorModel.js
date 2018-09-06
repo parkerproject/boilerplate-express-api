@@ -1,42 +1,34 @@
-// import { pickBy, identity, map } from 'lodash';
+const mysql = require('mysql');
 const db = require('../../config/database');
 
 class ColorModel {
   all(query, cb) {
-    const { limit = 20, offset = 0, name } = query;
+    let { limit = 20, offset = 0 } = query;
+    limit = Number(limit);
+    offset = Number(offset);
 
     let sql = `select e.id, t.translation from ginger.entities e
                 LEFT JOIN ginger.entity_types et on e.entity_type_id = et.id
                 LEFT JOIN ginger.terms t on t.parent_term_id = e.term_id
                 LEFT JOIN ginger.locales l on l.id = t.locale_id
-                where et.code = 'color' and l.code = 'en_GB' LIMIT ${limit} OFFSET ${offset};`;
+                where et.code = 'color' and l.code = 'en_GB' LIMIT ${offset}, ${limit};`;
 
 
-    if (name) {
-      let translations = name.split(',');
-      translations = translations.map(val => `"${val}"`).join(',');
+    if (query.name) {
+      let translations = query.name.split(',');
+      translations = translations.map(val => mysql.escape(val)).join(',');
       sql = `select e.id, t.translation from ginger.entities e
                    LEFT JOIN ginger.entity_types et on e.entity_type_id = et.id
                    LEFT JOIN ginger.terms t on t.parent_term_id = e.term_id
                    LEFT JOIN ginger.locales l on l.id = t.locale_id
-                   where et.code = 'color' and l.code = 'en_GB' and t.translation IN (${translations}) LIMIT ${limit} OFFSET ${offset};`;
+                   where et.code = 'color' and l.code = 'en_GB' and t.translation IN (${translations}) LIMIT ${offset}, ${limit};`;
     }
-
-    /* Implement stored procedures
-       1. get the defined query params from the request
-          => const conditions = pickBy(query, identity);
-       2. refactor the query to use stored procedures
-    */
 
 
     db.query(sql, (err, results) => {
       if (err) throw err;
-      cb(results);
+      cb(results, { total: results.length, limit, offset });
     });
-  }
-
-  byId(id) {
-    return id;
   }
 }
 
