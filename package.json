@@ -17,10 +17,7 @@
     "express-boom": "^2.0.0",
     "express-joi": "^0.3.1",
     "lodash": "^4.17.10",
-    "mysql": "^2.16.0",
-    "mysql2": "^1.6.1",
     "pino": "^4.17.6",
-    "solr-client": "^0.7.0",
     "source-map-support": "^0.5.4",
     "swagger-express-middleware": "^1.0.0-alpha.12"
   },
