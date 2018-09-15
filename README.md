@@ -1,6 +1,6 @@
-# instock-api
+# example-api
 
-Instock API
+Example API
 
 ## Install It
 ```
@@ -14,12 +14,6 @@ npm install
 npm run dev
 ```
 
-#### Run in *production* mode:
-
-```
-npm run compile
-npm start
-```
 
 #### Run tests:
 
